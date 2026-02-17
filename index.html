@@ -1,0 +1,356 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Convite Especial</title>
+
+  <style>
+@import url('https://fonts.googleapis.com/css2?family=Quicksand:wght@300..700&display=swap');
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      background: #000;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      overflow: hidden;
+      font-family: "Quicksand", sans-serif;
+    }
+
+    .container {
+      position: relative;
+      width: 100%;
+      max-width: 500px;
+    }
+
+    video {
+      width: 100%;
+      height: auto;
+      border-radius: 12px;
+      transition: opacity 0.6s ease;
+    }
+    a{
+        text-decoration: none;
+    }
+    p{
+            color: #9C27B0;
+            font-size: 11px;
+            text-align: center;
+            align-items: center;
+    }
+
+    #video2 {
+      position: absolute;
+      top: 0;
+      left: 0;
+      opacity: 0;
+      pointer-events: none;
+    }
+
+    .hidden {
+      opacity: 0;
+      pointer-events: none;
+    }
+
+    .visible {
+      opacity: 1;
+      pointer-events: auto;
+    }
+
+    .overlay-text {
+      position: absolute;
+      bottom: 20px;
+      opacity: 0 !important;
+      width: 100%;
+      text-align: center;
+      color: transparent;
+      font-size: 18px;
+      letter-spacing: 1px;
+      animation: pulse 1.5s infinite;
+      z-index: 2;
+    }
+
+    @keyframes pulse {
+      0% { opacity: 1; }
+      50% { opacity: 0.5; }
+      100% { opacity: 1; }
+    }
+
+    /* ===== ÍCONES SOBRE O SEGUNDO VÍDEO ===== */
+    .icons-container {
+    justify-content: center;
+    display: flex;
+    align-items: center;
+        top: 9%;
+    left: 0;
+    gap: 15px;
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      opacity: 0;              /* invisível inicialmente */
+      pointer-events: none;     /* não clicável inicialmente */
+      z-index: 3;
+      transition: opacity 1s ease; /* fade-in suave */
+    }
+
+    .icon-link {
+      /* position: absolute; */
+      width: 40px;
+      height: 40px;
+      pointer-events: auto;
+      cursor: pointer;
+      transition: transform 0.2s ease;
+    }
+
+    .icon-link:hover {
+      transform: scale(1.1);
+    }
+
+    .icon-link img {
+      width: 100%;
+      height: 100%;
+    }
+
+    /* Posicionamento dos ícones */
+    /* .icon1 { bottom: 20%; left: 20%; }
+    .icon2 { bottom: 20%; right: 20%; }
+    .icon3 { top: 20%; right: 20%; } */
+
+    /* ===== MODAL ===== */
+    .modal {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      display: none;
+      justify-content: center;
+      align-items: center;
+      background: rgba(0,0,0,0.6);
+      z-index: 10;
+    }
+
+    .modal.active {
+      display: flex;
+    }
+
+    .modal-content {
+      background: #fff;
+      padding: 20px 30px;
+      border-radius: 12px;
+      text-align: center;
+      position: relative;
+      max-width: 90%;
+    }
+
+    .modal-header {
+      font-size: 22px;
+      font-weight: bold;
+      margin-bottom: 10px;
+          color: #9C27B0;
+    }
+
+    .modal-subtitle {
+      font-size: 16px;
+      margin-bottom: 20px;
+          color: #9C27B0;
+    }
+
+    .modal-close {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    cursor: pointer;
+    font-weight: bold;
+    font-size: 18px;
+    color: #fff;
+    background: #9c27b0;
+    border-radius: 20px;
+    padding: 8px;
+    width: 38px;
+    height: 38px;
+
+    }
+
+    .modal-button {
+      padding: 0px 20px;
+      margin: 5px;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      color: #fff;
+      font-weight: bold;
+    }
+
+    .dresscode-btn {
+      background: #9b75fb;
+    }
+
+    .map-google {
+      background: #fbd36c;
+    }
+
+    .map-waze {
+      background: #9c27b0;
+
+    }
+    
+
+  </style>
+</head>
+
+<body>
+
+  <div class="container">
+
+    <!-- Vídeo 1 -->
+    <video id="video1" autoplay muted playsinline class="visible">
+      <source src="canva-first.mp4" type="video/mp4">
+    </video>
+
+    <div class="overlay-text" id="textoClique">
+      Clique para abrir
+    </div>
+
+    <!-- Vídeo 2 -->
+    <video id="video2" controls playsinline>
+      <source src="canva2.mp4" type="video/mp4">
+    </video>
+
+    <!-- ÍCONES SOBRE O SEGUNDO VÍDEO -->
+    <div class="icons-container" id="iconsContainer">
+      <!-- Icon 1 - Dress Code -->
+      <div class="icon-link icon1" id="icon1">
+        <img src="dress.png" alt="Dress Code">
+        <p>Dress Code</p>
+      </div>
+
+      <!-- Icon 2 - Como Chegar -->
+      <div class="icon-link icon2" id="icon2">
+        <img src="local.png" alt="Como Chegar">
+         <p>Como Chegar</p>
+      </div>
+
+      <!-- Icon 3 - Confirmar Presença -->
+      <a href="https://wa.me/5599999999999" target="_blank" class="icon-link icon3">
+        <img src="confirma.png" alt="Confirmar Presença">
+         <p>Confirmar Presença</p>
+      </a>
+    </div>
+
+  </div>
+
+ <!-- MODAL 1 - Dress Code -->
+<div class="modal" id="modalDressCode">
+  <div class="modal-content" style="
+        background: url('Cumpleaños.jpeg') no-repeat center center;
+        background-size: cover;
+        color: white;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        text-align: center;
+            width: 100%;
+    height: 71%;
+      ">
+    <div class="modal-close" id="closeDressCode">X</div>
+    <div class="modal-header">Dress Code</div>
+    <div class="modal-subtitle">Traje Formal</div>
+  </div>
+</div>
+
+<!-- MODAL 2 - Como Chegar -->
+<div class="modal" id="modalMaps">
+  <div class="modal-content" style="
+        background: url('Cumpleaños.jpeg') no-repeat center center;
+        background-size: cover;
+        color: white;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        text-align: center;
+        width: 100%;
+        height: 71%;
+      ">
+    <div class="modal-close" id="closeMaps">X</div>
+    <div class="modal-header">Como Chegar</div>
+    <div class="modal-subtitle">Escolha o aplicativo</div>
+    <div style="margin-top: 10px; display: flex; flex-direction: column; gap: 10px;">
+      <button class="modal-button map-google" onclick="window.open('https://maps.google.com', '_blank')" style="display: flex; align-items: center; gap: 8px;">
+        <img src="maps.png" alt="Google Maps" style="width:40px; height:40px;">
+        Google Maps
+      </button>
+      <button class="modal-button map-waze" onclick="window.open('https://www.waze.com/ul', '_blank')" style="display: flex; align-items: center; gap: 8px;">
+        <img src="waze.png" alt="Waze" style="width:40px; height:40px;">
+        Waze
+      </button>
+    </div>
+  </div>
+</div>
+
+
+
+  <script>
+    const video1 = document.getElementById('video1');
+    const video2 = document.getElementById('video2');
+    const textoClique = document.getElementById('textoClique');
+    const iconsContainer = document.getElementById('iconsContainer');
+
+    // Modais
+    const modalDressCode = document.getElementById('modalDressCode');
+    const closeDressCode = document.getElementById('closeDressCode');
+    const modalMaps = document.getElementById('modalMaps');
+    const closeMaps = document.getElementById('closeMaps');
+
+    // Inicialmente invisível
+    iconsContainer.style.opacity = 0;
+    iconsContainer.style.pointerEvents = "none";
+
+    // Clique no primeiro vídeo
+    video1.addEventListener('click', () => {
+      video1.classList.remove('visible');
+      video1.classList.add('hidden');
+      textoClique.style.display = 'none';
+
+      video2.classList.add('visible');
+      video2.style.opacity = '1';
+      video2.style.pointerEvents = 'auto';
+
+      video2.play();
+    });
+
+    // Mostrar ícones após 4 segundos
+    video2.addEventListener('timeupdate', () => {
+      if(video2.currentTime >= 4 && iconsContainer.style.opacity == 0) {
+        iconsContainer.style.opacity = 1;
+        iconsContainer.style.pointerEvents = "auto";
+      }
+    });
+
+    // Modal Dress Code
+    document.getElementById('icon1').addEventListener('click', () => {
+      modalDressCode.classList.add('active');
+    });
+    closeDressCode.addEventListener('click', () => {
+      modalDressCode.classList.remove('active');
+    });
+
+    // Modal Como Chegar
+    document.getElementById('icon2').addEventListener('click', () => {
+      modalMaps.classList.add('active');
+    });
+    closeMaps.addEventListener('click', () => {
+      modalMaps.classList.remove('active');
+    });
+  </script>
+
+</body>
+</html>
